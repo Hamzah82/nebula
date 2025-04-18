@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1f1f1f, #292929);
+            color: #fff;
+            text-align: center;
+        }
+        .calculator {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 400px;
+        }
+        .screen {
+            width: 100%;
+            height: 70px;
+            text-align: right;
+            font-size: 2em;
+            padding: 10px;
+            border: none;
+            background: #44475a;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid #1E90FF;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #1E90FF;
+            color: white;
+            transform: scale(1.05);
+        }
+        .special {
+            background: #ff5555;
+        }
+        .special:hover {
+            background: #ff7777;
+        }
+        .operator {
+            background: #ffb86c;
+        }
+        .operator:hover {
+            background: #ff9f43;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="screen" id="screen" value="0" disabled>
+        <div class="buttons">
+            <button class="special" onclick="clearScreen()">C</button>
+            <button class="special" onclick="backspace()">⌫</button>
+            <button onclick="appendValue('(')">(</button>
+            <button onclick="appendValue(')')">)</button>
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('/')">÷</button>
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('*')">×</button>
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('-')">−</button>
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="operator" onclick="calculate()">=</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+            <button class="operator" onclick="appendValue('Math.sqrt(')">√</button>
+        </div>
+    </div>
+    <script>
+        function appendValue(value) {
+            let screen = document.getElementById('screen');
+            if (screen.value === "0") {
+                screen.value = value;
+            } else {
+                screen.value += value;
+            }
+        }
+        function clearScreen() {
+            document.getElementById('screen').value = '0';
+        }
+        function backspace() {
+            let screen = document.getElementById('screen');
+            screen.value = screen.value.slice(0, -1);
+            if (screen.value === "") {
+                screen.value = "0";
+            }
+        }
+        function calculate() {
+            let screen = document.getElementById('screen').value;
+            screen = screen.replace(/x/g, '*').replace(/:/g, '/');
+            try {
+                document.getElementById('screen').value = eval(screen);
+            } catch (e) {
+                alert('Invalid Expression');
+            }
+        }
+    </script>
+</body>
+</html>
+

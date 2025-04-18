@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener - Nebula Server</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1f1f1f, #292929);
+            color: #fff;
+            text-align: center;
+        }
+        header {
+            background: rgba(30, 144, 255, 0.9);
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .box {
+            width: 45%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 2px solid #1E90FF;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+        }
+        button:hover {
+            background-color: #1E90FF;
+            transform: scale(1.05);
+        }
+        #shortened-url {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #38bdf8;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nebula Server</h1>
+        <p>URL Shortener</p>
+    </header>
+    <div class="container">
+        <div class="box">
+            <h2>Shorten URL</h2>
+            <input type="text" id="url-input" placeholder="Masukkan URL di sini...">
+            <button onclick="shortenUrl()">Shorten URL</button>
+            <p id="shortened-url"></p>
+        </div>
+    </div>
+    
+    <script>
+    function shortenUrl() {
+        let url = document.getElementById("url-input").value;
+        if (!url) {
+            alert("Masukkan URL terlebih dahulu");
+            return;
+        }
+
+        let shortCode = Math.random().toString(36).substring(2, 8); // Generate kode unik
+        localStorage.setItem(shortCode, url); // Simpan di localStorage
+
+        let shortUrl = window.location.origin + "/#" + shortCode; // Gunakan hash agar tetap di halaman yang sama
+        document.getElementById("shortened-url").innerHTML = `Shortened URL: <a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+    }
+
+    // Redirect jika ada kode hash di URL
+    window.onload = function() {
+        let shortCode = window.location.hash.substring(1);
+        if (shortCode && localStorage.getItem(shortCode)) {
+            window.location.href = localStorage.getItem(shortCode); // Redirect ke URL asli
+        }
+    }
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Hamzah</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1f1f1f, #292929);
+            color: #fff;
+            text-align: center;
+        }
+        header {
+            background: rgba(30, 144, 255, 0.9);
+            color: white;
+            padding: 40px 20px;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .project {
+            margin: 15px 0;
+            padding: 15px;
+            border: 2px solid #1E90FF;
+            border-radius: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .project:hover {
+            background-color: #1E90FF;
+            color: white;
+            transform: scale(1.05);
+        }
+        .project a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .contact a {
+            color: #1E90FF;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .contact a:hover {
+            text-decoration: underline;
+            color: #fff;
+        }
+        footer {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(30, 144, 255, 0.9);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hamzah</h1>
+        <p>Pelajar | Teknologi Enthusiast</p>
+    </header>
+    <div class="container">
+        <section class="about">
+            <h2>Tentang Saya</h2>
+            <p>Halo! Saya Hamzah, seorang pelajar kelas 11 di MAN Kota Surabaya yang memiliki ketertarikan dalam dunia teknologi dan pemrograman.</p>
+        </section>
+        <section class="projects">
+            <h2>Proyek Saya</h2>
+            <div class="project" onclick="location.href='/'">
+                <h3>Nebula server</h3>
+                <p>Mungkin anda sudah melihat nya, tapi kalau belum pencet kotak ini</p>
+            </div>
+        </section>
+        <section class="contact">
+            <h2>Kontak</h2>
+            <p>Email: <a href="mailto:wokabi108@gmail.com">wokabi108@gmail.com</a></p>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2025 Hamzah | All Rights Reserved</p>
+    </footer>
+    <script>
+        
+    </script>
+</body>
+</html>

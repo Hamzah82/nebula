@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator & Scanner - Nebula Server</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1f1f1f, #292929);
+            color: #fff;
+            text-align: center;
+        }
+        header {
+            background: rgba(30, 144, 255, 0.9);
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .box {
+            width: 45%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 2px solid #1E90FF;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+        }
+        button:hover {
+            background-color: #1E90FF;
+            transform: scale(1.05);
+        }
+        #qrcode-container, #reader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nebula Server</h1>
+        <p>QR Code Generator & Scanner</p>
+    </header>
+    <div class="container">
+        <div class="box">
+            <h2>Buat QR Code</h2>
+            <input type="text" id="text" placeholder="Masukkan teks atau URL">
+            <button onclick="generateQR()">Generate QR Code</button>
+            <div id="qrcode-container">
+                <div id="qrcode"></div>
+                <button id="download" style="display:none; margin-top: 10px;" onclick="downloadQR()">Download QR Code</button>
+            </div>
+        </div>
+        <div class="box">
+            <h2>Scan QR Code</h2>
+            <input type="file" accept="image/*" id="upload">
+            <button onclick="readQRFromImage()">Read QR Code</button>
+            <div id="reader"></div>
+            <p id="result">Hasil scan akan muncul di sini...</p>
+        </div>
+    </div>
+    
+    <script>
+        function generateQR() {
+            let text = document.getElementById("text").value;
+            let qrContainer = document.getElementById("qrcode");
+            qrContainer.innerHTML = "";
+            document.getElementById("download").style.display = "none";
+            
+            if (text) {
+                new QRCode(qrContainer, {
+                    text: text,
+                    width: 200,
+                    height: 200,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff"
+                });
+                setTimeout(() => {
+                    document.getElementById("download").style.display = "block";
+                }, 500);
+            }
+        }
+    
+        function downloadQR() {
+            let qrCanvas = document.querySelector("#qrcode canvas");
+            if (qrCanvas) {
+                let link = document.createElement("a");
+                link.href = qrCanvas.toDataURL("image/png");
+                link.download = "qrcode.png";
+                link.click();
+            }
+        }
+    
+        function readQRFromImage() {
+            let fileInput = document.getElementById("upload");
+            if (!fileInput.files || fileInput.files.length === 0) {
+                document.getElementById("result").innerText = "Tidak ada file yang dipilih.";
+                return;
+            }
+            let file = fileInput.files[0];
+            const html5QrCode = new Html5Qrcode("reader");
+            html5QrCode.scanFile(file, true)
+                .then(decodedText => {
+                    document.getElementById("result").innerText = "Hasil: " + decodedText;
+                })
+                .catch(err => {
+                    document.getElementById("result").innerText = "Gagal membaca QR Code. " + err;
+                });
+        }
+    </script>
+</body>
+</html>
+
